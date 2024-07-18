@@ -3,6 +3,7 @@ from django.urls import path, include
 from oauth2_provider import urls as oauth2_urls
 
 urlpatterns = [
+    path("admin/doc/", include("django.contrib.admindocs.urls")),
     path("admin/", admin.site.urls),
     path("otherTables/", include("OtherTables.urls")),
     path("users/", include("Users.urls")),
