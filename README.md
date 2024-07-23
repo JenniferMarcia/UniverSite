@@ -1,15 +1,19 @@
 # UniverSite
+
 UniverSite est une application web qui centralise les informations sur les universités à Madagascar, permettant aux futurs étudiants de naviguer et de choisir leur parcours d'enseignement supérieur. Ce projet gère le backend de l'application, y compris la gestion des utilisateurs, l'authentification, et les modèles de données pour les parcours et les filières universitaires.
 
 # Installation
+
 Après avoir cloné le projet:
-  -Crée un environnement virtuel que ce soit en utilisant virtualenv : python -m venv nom_env ou bien conda: condacreate -n nom_env , puis activez-le
-  -Installer les dépendances avec la commande pip install -r requierements.txt
-  -Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
-  - Configurer la base de données avec la commande " python manage.py migrate"
-  - Lancer le serveur avec la commande: python manage.py runserver
+
+- Crée un environnement virtuel que ce soit en utilisant virtualenv : python -m venv nom_env ou bien conda: condacreate -n nom_env , puis activez-le
+- Installer les dépendances avec la commande pip install -r requierements.txt
+- Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
+- Configurer la base de données avec la commande " python manage.py migrate"
+- Lancer le serveur avec la commande: python manage.py runserver
 
 # Les endpoints de l'API
+
  /users/:
         GET: Liste tous les utilisateurs au format JSON.
     /users/<pk>/:
@@ -26,6 +30,8 @@ Après avoir cloné le projet:
         POST: Permet d'obtenir un nouveau token JWT après expiration du jeton actuel.
     /users/logout/:
         POST: Permet de se déconnecter de l'application.
-# NB:
+
+# NB
+
 Assurez-vous d'ajouter /users/ avant d'appeler les endpoints Users.
-Pour les requêtes PUT, envoyez les données à modifier au format JSON dans le corps de la requête. 
+Pour les requêtes PUT, envoyez les données à modifier au format JSON dans le corps de la requête.
