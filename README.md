@@ -8,25 +8,25 @@ Après avoir cloné le projet:
   -Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
   - Configurer la base de données avec la commande " python manage.py migrate"
   - Créer un super utilisateur avec la commande : python manage.py createsuperuser
-  - Lancer le serveur avec la commande :python manage.py runserver
+  - Lancer le serveur avec la commande: python manage.py runserver
 
 # Les endpoints de l'API
  /users/:
-        -GET: Liste tous les utilisateurs au format JSON.
+        GET: Liste tous les utilisateurs au format JSON.
     /users/<pk>/:
-        -GET: Affiche les détails d'un utilisateur spécifique (remplacez <pk> par l'ID de l'utilisateur).
+        GET: Affiche les détails d'un utilisateur spécifique (remplacez <pk> par l'ID de l'utilisateur).
     /users/<pk>/update/:
-        -PUT: Permet de modifier les informations d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
+        PUT: Permet de modifier les informations d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
     /users/update-password/<pk>/:
-        -PUT: Permet de mettre à jour le mot de passe d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
+        PUT: Permet de mettre à jour le mot de passe d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
     /users/create/:
-        -POST: Permet de créer un nouvel utilisateur.
+        POST: Permet de créer un nouvel utilisateur.
     /users/token/:
-        -POST: Permet d'obtenir un token JWT pour l'authentification.
+        POST: Permet d'obtenir un token JWT pour l'authentification.
     /users/token/refresh/:
-        -POST: Permet d'obtenir un nouveau token JWT après expiration du jeton actuel.
+        POST: Permet d'obtenir un nouveau token JWT après expiration du jeton actuel.
     /users/logout/:
-        -POST: Permet de se déconnecter de l'application.
+        POST: Permet de se déconnecter de l'application.
 # NB:
 Assurez-vous d'ajouter /users/ avant d'appeler les endpoints Users.
 Pour les requêtes PUT, envoyez les données à modifier au format JSON dans le corps de la requête. 
