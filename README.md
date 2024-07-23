@@ -7,7 +7,6 @@ Après avoir cloné le projet:
   -Installer les dépendances avec la commande pip install -r requierements.txt
   -Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
   - Configurer la base de données avec la commande " python manage.py migrate"
-  - Créer un super utilisateur avec la commande : python manage.py createsuperuser
   - Lancer le serveur avec la commande: python manage.py runserver
 
 # Les endpoints de l'API
