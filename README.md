@@ -6,7 +6,7 @@ UniverSite est une application web qui centralise les informations sur les unive
 
 Après avoir cloné le projet:
 
-- Crée un environnement virtuel que ce soit en utilisant virtualenv : python -m venv nom_env ou bien conda: condacreate -n nom_env , puis activez-le
+- Créer un environnement virtuel que ce soit en utilisant virtualenv : python -m venv nom_env ou bien conda: condacreate -n nom_env , puis activez-le
 - Installer les dépendances avec la commande pip install -r requierements.txt
 - Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
 - Configurer la base de données avec la commande " python manage.py migrate"
