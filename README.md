@@ -1,11 +1,9 @@
-# DRFUniversite
-Description : UniverSite est un site web qui regroupe les univérsités de Madagascar afin que les futurs étudiants puissent trouver leur voie dans l'enseignement supérieur.
-Ce projet gère le coté back-end du site notament la connexion , le crud de l'user ainsi que des models : Parcours et Filière des universités.
+# UniverSite
+UniverSite est une application web qui centralise les informations sur les universités à Madagascar, permettant aux futurs étudiants de naviguer et de choisir leur parcours d'enseignement supérieur. Ce projet gère le backend de l'application, y compris la gestion des utilisateurs, l'authentification, et les modèles de données pour les parcours et les filières universitaires.
 
 # Installation
-
 Après avoir cloné le projet:
-  -Crée un environnement virtuel que ce soit en utilisant virtualenv ou bien conda, puis activez-le
+  -Crée un environnement virtuel que ce soit en utilisant virtualenv : python -m venv nom_env ou bien conda: condacreate -n nom_env , puis activez-le
   -Installer les dépendances avec la commande pip install -r requierements.txt
   -Créer un fichier .env et ajouter à l'intérieur : SECRET_KEY = ""
   - Configurer la base de données avec la commande " python manage.py migrate"
@@ -13,13 +11,22 @@ Après avoir cloné le projet:
   - Lancer le serveur avec la commande :python manage.py runserver
 
 # Les endpoints de l'API
- -> les points de l'application UserApp
-   Note: Ajouter /users/ avant d'écrire les endpoints ( exemple: http://127.0.0.1:8000/users/)
-      "" : Liste des users affichée en fomat JSON
-      -"<pk>/" : Detail sur un utilisateur
-      -"<pk>/update/" : pour modifier les info sur un utilisateur
-      -update-password/<pk>/" : pour mettre à jour le mot de passe d'un user
-     -"create/" : pour créer un utilisateur
-     -"token/" : pour obtenir le JWT
-     -"token/refresh/" : pour obtenir un nouveau jeton après expiration
-     -"logout/" : pour se déconnecter
+ /users/:
+        GET: Liste tous les utilisateurs au format JSON.
+    /users/<pk>/:
+        GET: Affiche les détails d'un utilisateur spécifique (remplacez <pk> par l'ID de l'utilisateur).
+    /users/<pk>/update/:
+        PUT: Permet de modifier les informations d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
+    /users/update-password/<pk>/:
+        PUT: Permet de mettre à jour le mot de passe d'un utilisateur (remplacez <pk> par l'ID de l'utilisateur).
+    /users/create/:
+        POST: Permet de créer un nouvel utilisateur.
+    /users/token/:
+        POST: Permet d'obtenir un token JWT pour l'authentification.
+    /users/token/refresh/:
+        POST: Permet d'obtenir un nouveau token JWT après expiration du jeton actuel.
+    /users/logout/:
+        POST: Permet de se déconnecter de l'application.
+# NB:
+Assurez-vous d'ajouter /users/ avant d'appeler les endpoints UserApp.
+Pour les requêtes PUT, envoyez les données à modifier au format JSON dans le corps de la requête. 
