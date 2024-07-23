@@ -4,6 +4,8 @@ from django.core.validators import MinLengthValidator
 
 TYPE_USER = (("Etudiant", "Édutiant(e)"), ("Universite", "Université"))
 
+# Create your models here.
+
 
 class CustomUser(AbstractUser):
     """User Model"""
@@ -21,5 +23,5 @@ class CustomUser(AbstractUser):
         max_digits=9, decimal_places=6, null=True, blank=True
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.username

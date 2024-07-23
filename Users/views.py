@@ -11,8 +11,6 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
-
 
 from .models import CustomUser
 from .serializers import CustomUserSerializer
@@ -20,7 +18,7 @@ from .serializers import CustomUserSerializer
 
 class CustomUserList(ListAPIView):
     """
-    View for all Users.
+    View to retrieve all Users.
     """
 
     queryset = CustomUser.objects.all()
@@ -29,7 +27,7 @@ class CustomUserList(ListAPIView):
 
 class CustomUserCreate(CreateAPIView):
     """
-    View for register new User.
+    View to register a new User.
     """
 
     queryset = CustomUser.objects.all()
@@ -38,7 +36,7 @@ class CustomUserCreate(CreateAPIView):
 
 class CustomUserDetail(RetrieveAPIView):
     """
-    View for retrieve an User .
+    View to retrieve an User .
     """
 
     queryset = CustomUser.objects.all()
@@ -47,17 +45,14 @@ class CustomUserDetail(RetrieveAPIView):
 
 class CustomUserUpdate(UpdateAPIView):
     """
-    View for update an User .
+    View to update an User .
     """
 
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can update its information
+    permission_classes = [IsAuthenticated,]  # Only the user itself can update its information
     authentication_classes = [JWTAuthentication]
 
     def perform_update(self, serializer):
-        if self.get_object().pk == self.request.user.pk:  # Check if user updates itself
+        if self.get_object().pk == self.request.user.pk:
             serializer.save()
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
@@ -68,14 +63,11 @@ class CustomUserUpdate(UpdateAPIView):
 
 class CustomUserDelete(DestroyAPIView):
     """
-    View for Delete an User.
+    View to Delete an User.
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can delete its own account
+    permission_classes = [IsAuthenticated]  # Only the user itself can delete its own account
 
     def perform_destroy(self, instance):
         if instance.pk == self.request.user.pk:  # Check if user deletes itsself
@@ -88,11 +80,12 @@ class CustomUserDelete(DestroyAPIView):
 
 
 class UpdatePasswordView(APIView):
+    """
+    View to update user's password
+    """
+
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only authenticated users can update their password
+    permission_classes = [IsAuthenticated,]  # Only authenticated users can update their password
 
     def post(self, request, *args, **kwargs):
         user = self.request.user  # Access authenticated user
@@ -122,14 +115,11 @@ class UpdatePasswordView(APIView):
 
 class LogoutView(APIView):
     """
-    View for CustomUser logout with JWT token blacklisting.
+    View for User logout with JWT token blacklisting.
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only authenticated users can update password
+    permission_classes = [IsAuthenticated,]  # Only authenticated users can update password
 
     def post(self, request, *args, **kwargs):
         # Access the refresh token from request headers or cookies

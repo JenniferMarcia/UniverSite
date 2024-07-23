@@ -9,7 +9,7 @@ from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 
 class CourseListView(generics.ListAPIView):
     """
-    List view to retrieve all Course objects.
+    View for all Course objects.
     """
 
     queryset = Course.objects.all()
@@ -18,7 +18,7 @@ class CourseListView(generics.ListAPIView):
 
 class CourseDetailView(generics.RetrieveAPIView):
     """
-    Retrieve details of a specific Course instance.
+    View to retrieve details of a specific Course instance.
     """
 
     queryset = Course.objects.all()
@@ -27,7 +27,7 @@ class CourseDetailView(generics.RetrieveAPIView):
 
 class CourseCreateView(generics.CreateAPIView):
     """
-    Create a new Course instance.
+    View to create a new Course instance.
     """
 
     queryset = Course.objects.all()
@@ -36,14 +36,14 @@ class CourseCreateView(generics.CreateAPIView):
 
 class CourseUpdateView(generics.UpdateAPIView):
     """
-    Update an existing Course instance.
+    View to update an existing Course instance.
     """
 
     authentication_classes = [JWTAuthentication]
     permission_classes = [
         IsAuthenticated,
         TokenHasReadWriteScope,
-    ]  # Only the user itself can delete its own account
+    ]  # Only the user itself can update its own account
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
@@ -53,14 +53,14 @@ class CourseUpdateView(generics.UpdateAPIView):
 
         # Check if the current user is associated with this Course
         if not Course.custom_users.filter(pk=self.request.user.pk).exists():
-            raise PermissionDenied("You are not authorized to update this Course")
+            raise PermissionDenied("You are not authorized to update this Course.")
 
         return Course
 
 
 class CourseDeleteView(generics.DestroyAPIView):
     """
-    Delete a Course instance.
+    View to delete a Course instance.
     """
 
     authentication_classes = [JWTAuthentication]
@@ -84,7 +84,7 @@ class CourseDeleteView(generics.DestroyAPIView):
 
 class FieldOfStudyListView(generics.ListAPIView):
     """
-    List view to retrieve all FieldOfStudy objects.
+    View to retrieve all FieldOfStudy objects.
     """
 
     queryset = FieldOfStudy.objects.all()
@@ -93,7 +93,7 @@ class FieldOfStudyListView(generics.ListAPIView):
 
 class FieldOfStudyDetailView(generics.RetrieveAPIView):
     """
-    Retrieve details of a specific FieldOfStudy instance.
+    View to retrieve details of a specific FieldOfStudy instance.
     """
 
     queryset = FieldOfStudy.objects.all()
@@ -102,7 +102,7 @@ class FieldOfStudyDetailView(generics.RetrieveAPIView):
 
 class FieldOfStudyCreateView(generics.CreateAPIView):
     """
-    Create a new FieldOfStudy instance.
+    View to create a new FieldOfStudy instance.
     """
 
     queryset = FieldOfStudy.objects.all()
@@ -111,7 +111,7 @@ class FieldOfStudyCreateView(generics.CreateAPIView):
 
 class FieldOfStudyUpdateView(generics.UpdateAPIView):
     """
-    Update an existing FieldOfStudy instance.
+    View to update an existing FieldOfStudy instance.
     """
 
     authentication_classes = [JWTAuthentication]
@@ -137,7 +137,7 @@ class FieldOfStudyUpdateView(generics.UpdateAPIView):
 
 class FieldOfStudyDeleteView(generics.DestroyAPIView):
     """
-    Delete a FieldOfStudy instance.
+    View to Delete a FieldOfStudy instance.
     """
 
     authentication_classes = [JWTAuthentication]

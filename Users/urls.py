@@ -9,9 +9,9 @@ from .views import (
     LogoutView,
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.urls import re_path
 
 urlpatterns = [
+    # CRUD User urls
     path("", CustomUserList.as_view(), name="user-list"),
     path("<int:pk>/", CustomUserDetail.as_view(), name="user-detail"),
     path("<int:pk>/update/", CustomUserUpdate.as_view(), name="user-update"),
@@ -23,9 +23,11 @@ urlpatterns = [
         UpdatePasswordView.as_view(),
         name="update-password",
     ),
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
-    re_path("auth/", include("drf_social_oauth2.urls", namespace="drf")),
+    # JWT urls
+    path(
+        "token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
+    ),  # to get a token
+    path(
+        "token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
+    ),  # to refresh a token
 ]
-
-

@@ -36,9 +36,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-    "oauth2_provider",
-    "social_django",
-    "drf_social_oauth2",
+    "drf_yasg",
+    "rest_framework_swagger",
 ]
 
 MIDDLEWARE = [
@@ -51,27 +50,23 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-""""""
-OAUTH2_PROVIDER = {
-    # List of available scopes
-    "SCOPES": {
-        "read": "Read scope",
-        "write": "Write scope",
-        "groups": "Access to your groups",
-    },
-}
-
 # Data render type,authentication
 REST_FRAMEWORK = {
     # "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
-        "drf_social_oauth2.authentication.SocialAuthentication",
     ],
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
+    "DEFAULT_SCHEMA_CLASS": ["drf_spectacular.openapi.AutoSchema"],
+}
+
+# API DOCUMENTATION SETTINGS
+SPECTACULAR_SETTINGS = {
+    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
 }
 
 # JWT settings
@@ -83,40 +78,13 @@ SIMPLE_JWT = {
     "SLIDING_TOKEN_LIFETIME_LATE_USER": timedelta(days=30),
 }
 
-# LOGIN_URL = "/admin/login/"
+# User model
+AUTH_USER_MODEL = "Users.CustomUser"
 
 AUTHENTICATION_BACKENDS = [
     # Django
     "django.contrib.auth.backends.ModelBackend",
-    # drf_social_OAuth2
-    "drf_social_oauth2.backends.DjangoOAuth2",
-    # Facebook OAuth2
-    "social_core.backends.facebook.FacebookAppOAuth2",
-    "social_core.backends.facebook.FacebookOAuth2",
-    # Google  OAuth2
-    "social_core.backends.google.GoogleOAuth2",
 ]
-
-# Facebook configuration
-SOCIAL_AUTH_FACEBOOK_KEY = "<your app id goes here>"
-SOCIAL_AUTH_FACEBOOK_SECRET = "<your app secret goes here>"
-
-# Define SOCIAL_AUTH_FACEBOOK_SCOPE to get extra permissions from Facebook.
-SOCIAL_AUTH_FACEBOOK_SCOPE = ["email"]
-SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {"fields": "id, name, email"}
-
-
-# Google configuration
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "<your app id goes here>"
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "<your app secret goes here>"
-
-# Define SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE to get extra permissions from Google.
-SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
-    "https://www.googleapis.com/auth/userinfo.email",
-    "https://www.googleapis.com/auth/userinfo.profile",
-]
-
-AUTH_USER_MODEL = "Users.CustomUser"
 
 
 ROOT_URLCONF = "Project.urls"
@@ -132,8 +100,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "social_django.context_processors.backends",
-                "social_django.context_processors.login_redirect",
             ],
         },
     },
@@ -147,12 +113,8 @@ WSGI_APPLICATION = "Project.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "projet",
-        "USER": "Jennifer",
-        "PASSWORD": "baka1306",
-        "HOST": "localhost",
-        "PORT": "5432",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
 }
 
@@ -174,12 +136,6 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
-
-AUTHENTICATION_BACKENDS = [
-    "django.contrib.auth.backends.ModelBackend",
-    "oauth2_provider.backends.OAuth2Backend",
-]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/

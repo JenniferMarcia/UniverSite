@@ -21,7 +21,7 @@ class CustomUserTests(TestCase):
         self.user_update_url = reverse("user-update", kwargs={"pk": self.user.pk})
         self.user_delete_url = reverse("user-delete", kwargs={"pk": self.user.pk})
         self.login_url = reverse("login")
-        self.logout_url = reverse("logout") 
+        self.logout_url = reverse("logout")
         self.update_password_url = reverse(
             "update-password", kwargs={"pk": self.user.pk}
         )

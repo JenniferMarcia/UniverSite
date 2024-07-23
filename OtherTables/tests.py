@@ -4,7 +4,7 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Course, FieldOfStudy
 
-from UserApp.models import CustomUser
+from Users.models import CustomUser
 
 
 class CourseUpdateDeleteTests(TestCase):
@@ -27,9 +27,7 @@ class CourseUpdateDeleteTests(TestCase):
             "course_name": "new name Course",
             "prerequisites": "Nouveaux prérequis",
             "details": "new details",
-            "custom_users": [
-                self.custom_user.pk
-            ],  # Utilisation correcte de custom_users et de l'ID de l'utilisateur personnalisé
+            "custom_users": [self.custom_user.pk],
         }
 
     def test_update_course(self):
@@ -39,67 +37,63 @@ class CourseUpdateDeleteTests(TestCase):
         # URL pour mettre à jour l'instance de Course
         url = reverse(
             "Course-update", kwargs={"pk": self.course.pk}
-        )  # Utilisation de "Course-update" ici
+        )  #  we use "Course-update" here
 
-        # Faire une requête PUT avec le payload valide
+        # Make a PUT request with the valid payload
         response = self.client.put(url, self.valid_payload, format="json")
 
         # Vérifier que le code d'état de la réponse est HTTP 200 OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unauthorized_update_course(self):
-        # Créer un nouvel utilisateur personnalisé non associé au cours
+        # Create a new user for create a new user associated to Course
         unauthorized_custom_user = CustomUser.objects.create_user(
-            username="unauthorized", password="testpassword"
+            username="test", password="testpassword"
         )
 
-        # Authentifier cet utilisateur personnalisé non autorisé
+        # Authenticate this unauthorized user
         self.client.force_authenticate(user=unauthorized_custom_user)
 
-        # URL pour mettre à jour l'instance de Course
+        # Update course URL
         url = reverse(
             "Course-update", kwargs={"pk": self.course.pk}
         )  # Utilisation de "Course-update" ici
 
-        # Faire une requête PUT avec le payload valide
+        # PUT request with valid playload
         response = self.client.put(url, self.valid_payload, format="json")
 
-        # Vérifier que le code d'état de la réponse est HTTP 403 Forbidden
+        # Verrify if state code  equals HTTP 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_delete_course(self):
-        # Authentifier l'utilisateur personnalisé
+        # Create a user not associated with any course
         self.client.force_authenticate(user=self.custom_user)
 
-        # URL pour supprimer l'instance de Course
-        url = reverse(
-            "Course-delete", kwargs={"pk": self.course.pk}
-        )  # Utilisation de "Course-delete" ici
+        # URL for deleting the course
+        url = reverse("Course-delete", kwargs={"pk": self.course.pk})
 
-        # Faire une requête DELETE
+        # send a DELETE request
         response = self.client.delete(url)
 
-        # Vérifier que le code d'état de la réponse est HTTP 204 No Content (suppression réussie)
+        # Verrify if state code equals HTTP 204 No Content (suppression réussie)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_unauthorized_delete_course(self):
-        # Créer un nouvel utilisateur personnalisé non associé au cours
+        # Create an user with no course
         unauthorized_custom_user = CustomUser.objects.create_user(
             username="unauthorized", password="testpassword"
         )
 
-        # Authentifier cet utilisateur personnalisé non autorisé
+        # authenticate this user  with no course
         self.client.force_authenticate(user=unauthorized_custom_user)
 
-        # URL pour supprimer l'instance de Course
-        url = reverse(
-            "Course-delete", kwargs={"pk": self.course.pk}
-        )  # Utilisation de "Course-delete" ici
+        # DELETE course
+        url = reverse("Course-delete", kwargs={"pk": self.course.pk})
 
-        # Faire une requête DELETE
+        # DELETE request
         response = self.client.delete(url)
 
-        # Vérifier que le code d'état de la réponse est HTTP 403 Forbidden
+        # Verrify if state code  if not equals HTTP 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
@@ -107,81 +101,81 @@ class FieldOfStudyUpdateDeleteTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        # Créer un utilisateur personnalisé
+        # Create a custom user
         self.custom_user = CustomUser.objects.create_user(
             username="testuser", password="testpassword"
         )
 
-        # Créer un cours associé à l'utilisateur personnalisé
+        # Create a course associated with the custom user
         self.course = Course.objects.create(course_name="Course test")
         self.course.custom_users.add(self.custom_user)
 
-        # Créer un domaine d'étude associé au cours
+        # Create a field of study associated with the course
         self.field_of_study = FieldOfStudy.objects.create(
             field_name="FieldOfStudy test", course=self.course
         )
 
-        # Payload valide pour mettre à jour FieldOfStudy
-        self.valid_payload = {"field_name": "Nouveau nom de FieldOfStudy"}
+        # Valid payload to update FieldOfStudy
+        self.valid_payload = {"field_name": "New FieldOfStudy name"}
 
     def test_update_field_of_study(self):
-        # Authentifier l'utilisateur personnalisé
+        # Authenticate the custom user
         self.client.force_authenticate(user=self.custom_user)
 
-        # URL pour mettre à jour l'instance de FieldOfStudy
+        # URL to update the FieldOfStudy instance
         url = reverse("FieldOfStudy-update", kwargs={"pk": self.field_of_study.pk})
 
-        # Faire une requête PUT avec le payload valide
+        # Make a PUT request with the valid payload
         response = self.client.put(url, self.valid_payload, format="json")
 
-        # Vérifier que le code d'état de la réponse est HTTP 200 OK
+        # Check that the response status code is HTTP 200 OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unauthorized_update_field_of_study(self):
-        # Créer un nouvel utilisateur personnalisé non associé au cours
+        # Create a new custom user not associated with the course
         unauthorized_custom_user = CustomUser.objects.create_user(
             username="unauthorized", password="testpassword"
         )
 
-        # Authentifier cet utilisateur personnalisé non autorisé
+        # Authenticate this unauthorized custom user
         self.client.force_authenticate(user=unauthorized_custom_user)
 
-        # URL pour mettre à jour l'instance de FieldOfStudy
+        # URL to update the FieldOfStudy instance
         url = reverse("FieldOfStudy-update", kwargs={"pk": self.field_of_study.pk})
 
-        # Faire une requête PUT avec le payload valide
+        # Make a PUT request with the valid payload
         response = self.client.put(url, self.valid_payload, format="json")
 
-        # Vérifier que le code d'état de la réponse est HTTP 403 Forbidden
+        # Check that the response status code is HTTP 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
     def test_delete_field_of_study(self):
-        # Authentifier l'utilisateur personnalisé
+        # Authenticate the custom user
         self.client.force_authenticate(user=self.custom_user)
 
-        # URL pour supprimer l'instance de FieldOfStudy
+        # URL to delete the FieldOfStudy instance
         url = reverse("FieldOfStudy-delete", kwargs={"pk": self.field_of_study.pk})
 
-        # Faire une requête DELETE
+        # Make a DELETE request
         response = self.client.delete(url)
 
-        # Vérifier que le code d'état de la réponse est HTTP 204 No Content (suppression réussie)
+        # Check that the response status code is HTTP 204 No Content (deletion successful)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
 
     def test_unauthorized_delete_field_of_study(self):
-        # Créer un nouvel utilisateur personnalisé non associé au cours
+        # Create a new custom user not associated with the course
         unauthorized_custom_user = CustomUser.objects.create_user(
             username="unauthorized", password="testpassword"
         )
 
-        # Authentifier cet utilisateur personnalisé non autorisé
+        # Authenticate this unauthorized custom user
         self.client.force_authenticate(user=unauthorized_custom_user)
 
-        # URL pour supprimer l'instance de FieldOfStudy
+        # URL to delete the FieldOfStudy instance
         url = reverse("FieldOfStudy-delete", kwargs={"pk": self.field_of_study.pk})
 
-        # Faire une requête DELETE
+        # send a DELETE request
         response = self.client.delete(url)
 
-        # Vérifier que le code d'état de la réponse est HTTP 403 Forbidden
+        # Check that the response status code is HTTP 403 Forbidden
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
