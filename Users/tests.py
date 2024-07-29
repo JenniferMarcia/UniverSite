@@ -30,38 +30,29 @@ class CustomUserTests(TestCase):
         self.client.logout()
 
     def test_user_list(self):
-        # Test user list endpoint
         response = self.client.get(self.user_list_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertGreaterEqual(
-            len(response.data), 1
-        )  # Check that the user list is not empty
+        self.assertGreaterEqual(len(response.data), 1)
 
     def test_user_detail(self):
-        # Test user detail endpoint
         response = self.client.get(self.user_detail_url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(
-            response.data["id"], self.user.pk
-        )  # Check that retrieved details match authenticated user
+        self.assertEqual(response.data["id"], self.user.pk)
 
     def test_user_update(self):
-        # Test user update endpoint
-        data = {"email": "new_email@example.com"}  # Update data
+        data = {"email": "new_email@test.com"}
         response = self.client.patch(self.user_update_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         updated_user = CustomUser.objects.get(pk=self.user.pk)
-        self.assertEqual(updated_user.email, "new_email@example.com")
+        self.assertEqual(updated_user.email, "new_email@test.com")
 
     def test_user_delete(self):
-        # Test user delete endpoint
         response = self.client.delete(self.user_delete_url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         with self.assertRaises(CustomUser.DoesNotExist):
             CustomUser.objects.get(pk=self.user.pk)
 
     def test_login(self):
-        # Test login endpoint
         data = {"username": self.user.username, "password": "password"}
         response = self.client.post(self.login_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -70,18 +61,14 @@ class CustomUserTests(TestCase):
         self.assertIn("user", response.data)
 
     def test_logout(self):
-        # Test logout endpoint
         refresh = RefreshToken.for_user(self.user)  # Generate refresh token
         response = self.client.post(
             self.logout_url, {"refresh": str(refresh)}, format="json"
         )
         self.assertEqual(response.status_code, status.HTTP_205_RESET_CONTENT)
-        self.assertIn(
-            "Logout successful", response.data["message"]
-        )  # Check the response message
+        self.assertIn("Logout successful", response.data["message"])
 
     def test_update_password(self):
-        # Test update password endpoint
         data = {"current_password": "password", "new_password": "new_password"}
         response = self.client.post(self.update_password_url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)

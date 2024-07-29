@@ -8,7 +8,9 @@ TYPE_USER = (("Etudiant", "Édutiant(e)"), ("Universite", "Université"))
 
 
 class CustomUser(AbstractUser):
-    """User Model"""
+    """
+    User Model
+    """
 
     profil_picture = models.ImageField(upload_to="media", default="profilpic.png")
     type_user = models.CharField(max_length=10, choices=TYPE_USER, default="Etudiant")

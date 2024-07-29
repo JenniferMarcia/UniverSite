@@ -24,10 +24,6 @@ urlpatterns = [
         name="update-password",
     ),
     # JWT urls
-    path(
-        "token/", TokenObtainPairView.as_view(), name="token_obtain_pair"
-    ),  # to get a token
-    path(
-        "token/refresh/", TokenRefreshView.as_view(), name="token_refresh"
-    ),  # to refresh a token
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"), 
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"), 
 ]

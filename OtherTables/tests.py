@@ -3,7 +3,6 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Course, FieldOfStudy
-
 from Users.models import CustomUser
 
 
@@ -11,16 +10,12 @@ class CourseUpdateDeleteTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        # Create a CustomUser
         self.custom_user = CustomUser.objects.create_user(
             username="testuser", password="testpassword"
         )
-
-        # Create a Course associated with the CustomUser
+        
         self.course = Course.objects.create(course_name="Course test")
-        self.course.custom_users.add(
-            self.custom_user
-        )  # Utilisation correcte de custom_users
+        self.course.custom_users.add(self.custom_user)
 
         # Valid payload for updating Course
         self.valid_payload = {
@@ -34,15 +29,13 @@ class CourseUpdateDeleteTests(TestCase):
         # Authenticate the CustomUser
         self.client.force_authenticate(user=self.custom_user)
 
-        # URL pour mettre à jour l'instance de Course
-        url = reverse(
-            "Course-update", kwargs={"pk": self.course.pk}
-        )  #  we use "Course-update" here
+        # URL to update a  Course instance
+        url = reverse("Course-update", kwargs={"pk": self.course.pk})
 
         # Make a PUT request with the valid payload
         response = self.client.put(url, self.valid_payload, format="json")
 
-        # Vérifier que le code d'état de la réponse est HTTP 200 OK
+        # Verrify if state code equals HTTP 200 OK
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_unauthorized_update_course(self):
@@ -55,9 +48,7 @@ class CourseUpdateDeleteTests(TestCase):
         self.client.force_authenticate(user=unauthorized_custom_user)
 
         # Update course URL
-        url = reverse(
-            "Course-update", kwargs={"pk": self.course.pk}
-        )  # Utilisation de "Course-update" ici
+        url = reverse("Course-update", kwargs={"pk": self.course.pk})  
 
         # PUT request with valid playload
         response = self.client.put(url, self.valid_payload, format="json")
@@ -101,16 +92,13 @@ class FieldOfStudyUpdateDeleteTests(TestCase):
     def setUp(self):
         self.client = APIClient()
 
-        # Create a custom user
         self.custom_user = CustomUser.objects.create_user(
             username="testuser", password="testpassword"
         )
 
-        # Create a course associated with the custom user
         self.course = Course.objects.create(course_name="Course test")
         self.course.custom_users.add(self.custom_user)
 
-        # Create a field of study associated with the course
         self.field_of_study = FieldOfStudy.objects.create(
             field_name="FieldOfStudy test", course=self.course
         )

@@ -4,7 +4,6 @@ from rest_framework.exceptions import PermissionDenied
 from .models import Course, FieldOfStudy
 from .serializers import CourseSerializer, FieldOfStudySerializer
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
 
 
 class CourseListView(generics.ListAPIView):
@@ -40,15 +39,11 @@ class CourseUpdateView(generics.UpdateAPIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can update its own account
+    permission_classes = [IsAuthenticated]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
     def get_object(self):
-        # get the Course instance to update
         Course = super().get_object()
 
         # Check if the current user is associated with this Course
@@ -64,15 +59,11 @@ class CourseDeleteView(generics.DestroyAPIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can delete its own account
+    permission_classes = [IsAuthenticated]
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
 
     def get_object(self):
-        # Récupère l'instance de Course à supprimer
         Course = super().get_object()
 
         # Vérifie si l'utilisateur actuel est associé à ce Course
@@ -115,15 +106,11 @@ class FieldOfStudyUpdateView(generics.UpdateAPIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can delete its own account
+    permission_classes = [IsAuthenticated]
     queryset = FieldOfStudy.objects.all()
     serializer_class = FieldOfStudySerializer
 
     def get_object(self):
-        # Get the FieldOfStudy instance to update
         FieldOfStudy = super().get_object()
 
         # Check if the current user is associated with this FieldOfStudy
@@ -141,15 +128,11 @@ class FieldOfStudyDeleteView(generics.DestroyAPIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-        TokenHasReadWriteScope,
-    ]  # Only the user itself can delete its own account
+    permission_classes = [IsAuthenticated]
     queryset = FieldOfStudy.objects.all()
     serializer_class = FieldOfStudySerializer
 
     def get_object(self):
-        # Get the FieldOfStudy instance to delete
         FieldOfStudy = super().get_object()
 
         # Check if the current user is associated with this FieldOfStudy

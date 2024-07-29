@@ -3,7 +3,9 @@ from .models import CustomUser
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    """Serializer for User model"""
+    """
+    Serializer for User model
+    """
 
     class Meta:
         model = CustomUser

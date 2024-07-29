@@ -3,7 +3,9 @@ from .models import Course, FieldOfStudy
 
 
 class CourseSerializer(serializers.ModelSerializer):
-    """Serializer for Course model"""
+    """
+    Serializer for Course model
+    """
 
     class Meta:
         model = Course
@@ -11,7 +13,9 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class FieldOfStudySerializer(serializers.ModelSerializer):
-    """Serializer for Field of study model"""
+    """
+    Serializer for Field of study model
+    """
 
     class Meta:
         model = FieldOfStudy

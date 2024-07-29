@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
-    "drf_yasg",
     "rest_framework_swagger",
 ]
 
@@ -63,14 +62,6 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
-    "DEFAULT_SCHEMA_CLASS": ["drf_spectacular.openapi.AutoSchema"],
-}
-
-# API DOCUMENTATION SETTINGS
-SPECTACULAR_SETTINGS = {
-    "SWAGGER_UI_DIST": "SIDECAR",  # shorthand to use the sidecar instead
-    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
-    "REDOC_DIST": "SIDECAR",
 }
 
 # JWT settings
@@ -89,7 +80,6 @@ AUTHENTICATION_BACKENDS = [
     # Django
     "django.contrib.auth.backends.ModelBackend",
 ]
-
 
 ROOT_URLCONF = "Project.urls"
 

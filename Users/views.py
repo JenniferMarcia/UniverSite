@@ -48,9 +48,7 @@ class CustomUserUpdate(UpdateAPIView):
     View to update an User .
     """
 
-    permission_classes = [
-        IsAuthenticated,
-    ]  # Only the user itself can update its information
+    permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def perform_update(self, serializer):
@@ -69,9 +67,7 @@ class CustomUserDelete(DestroyAPIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated
-    ]  # Only the user itself can delete its own account
+    permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
         if instance.pk == self.request.user.pk:  # Check if user deletes itsself
@@ -85,16 +81,14 @@ class CustomUserDelete(DestroyAPIView):
 
 class UpdatePasswordView(APIView):
     """
-    View to update user's password
+    View to update user password
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-    ]  # Only authenticated users can update their password
+    permission_classes = [IsAuthenticated] 
 
     def post(self, request, *args, **kwargs):
-        user = self.request.user  # Access authenticated user
+        user = self.request.user 
         current_password = request.data["current_password"]
         new_password = request.data["new_password"]
 
@@ -125,9 +119,7 @@ class LogoutView(APIView):
     """
 
     authentication_classes = [JWTAuthentication]
-    permission_classes = [
-        IsAuthenticated,
-    ]  # Only authenticated users can update password
+    permission_classes = [IsAuthenticated] 
 
     def post(self, request, *args, **kwargs):
         # Access the refresh token from request headers or cookies

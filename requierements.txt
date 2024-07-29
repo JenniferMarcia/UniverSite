@@ -1,7 +1,6 @@
+python-dotenv
 django
-djangorestframework
 pillow
+djangorestframework
 djangorestframework-simplejwt
 django-cors-headers
-drf_social_oauth2
-drf-spectacular 
