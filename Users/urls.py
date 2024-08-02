@@ -10,6 +10,11 @@ from .views import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
+
+
+
+
+
 urlpatterns = [
     # CRUD User urls
     path("", CustomUserList.as_view(), name="user-list"),
@@ -24,6 +29,8 @@ urlpatterns = [
         name="update-password",
     ),
     # JWT urls
-    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"), 
-    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"), 
+    path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    
 ]
+
