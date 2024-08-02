@@ -33,3 +33,11 @@ Après avoir cloné le projet:
 
 NB :Assurez-vous d'ajouter /users/ avant d'appeler les endpoints Users.
     Pour les requêtes PUT, envoyez les données à modifier au format JSON dans le corps de la requête.
+
+# API Documentation
+
+- Les endpoints des Api doc sont :
+    /swagger.json : affiche une  vue __JSON__  de l'API
+    /swagger.yaml : affiche une  vue __YAML__ de l' API
+   /swagger/ : affiche vue __swagger-ui__ de l' API  
+    /redoc/ : affiche une vue  __ReDoc__ de l'API
