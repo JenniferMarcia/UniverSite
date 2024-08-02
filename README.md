@@ -20,7 +20,7 @@ Après avoir cloné le projet:
      conda create -n nom_env
      ```
 
-  Puis activez-le
+  Puis activez-le  
 2. **Installer les dépendances avec** :
 
    ```bash
