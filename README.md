@@ -20,12 +20,13 @@ Après avoir cloné le projet:
      conda create -n nom_env
      ```
 
-  Puis activez-le  
+   Puis activez-le.
+
 2. **Installer les dépendances avec** :
 
    ```bash
-       pip install -r requierements.txt
-    ```
+   pip install -r requirements.txt
+
 3. **Créer un fichier .env et ajouter à l'intérieur** :
 
     - SECRET_KEY = ""
