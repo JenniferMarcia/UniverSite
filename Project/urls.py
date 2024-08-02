@@ -25,7 +25,6 @@ urlpatterns = [
     # Django Applications urls
     path("otherTables/", include("OtherTables.urls")),
     path("users/", include("Users.urls")),
-    
     path(
         "swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"
     ),
@@ -33,12 +32,8 @@ urlpatterns = [
         "swagger/",
         schema_view.with_ui("swagger", cache_timeout=0),
         name="schema-swagger-ui",
-    ),
-    path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    ),  # Swagger view
+    path(
+        "redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"
+    ),  # ReDoc view
 ]
-
-"""    A JSON view of your API specification at /swagger.json
-    A YAML view of your API specification at /swagger.yaml
-    A swagger-ui view of your API specification at /swagger/
-    A ReDoc view of your API specification at /redoc/
-    """
