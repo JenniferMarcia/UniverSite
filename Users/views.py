@@ -70,7 +70,7 @@ class CustomUserDelete(DestroyAPIView):
     permission_classes = [IsAuthenticated]
 
     def perform_destroy(self, instance):
-        if instance.pk == self.request.user.pk:  # Check if user deletes itsself
+        if instance.pk == self.request.user.pk: 
             instance.delete()
         else:
             return Response(status=status.HTTP_403_FORBIDDEN)
