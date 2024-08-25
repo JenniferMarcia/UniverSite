@@ -13,13 +13,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
-
+SECRET_KEY = os.getenv("SECRET_KEY","django-insecure-8_+h%9srwat(r)p)q-q(@jz^d5u0@stw01*mjbd26@3+^l9q!g")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ["*","megumi.pythonanywhere.com","0.0.0.0","localhost","127.0.0.1"]
 
 # Application definition
 
@@ -55,7 +53,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 # Data render type,authentication
 REST_FRAMEWORK = {
-   
+
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
