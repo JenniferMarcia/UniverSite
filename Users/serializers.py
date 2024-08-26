@@ -25,6 +25,11 @@ class CustomUserSerializer(serializers.ModelSerializer):
             "password": {"write_only": True},
         }
 
+    def __init__(self, *args, **kwargs):
+        super(CustomUserSerializer, self).__init__(*args, **kwargs)
+        if self.context["request"].method == "PUT":
+            self.fields.pop("password")
+
     def create(self, validated_data):
         user = CustomUser.objects.create(
             **validated_data,
